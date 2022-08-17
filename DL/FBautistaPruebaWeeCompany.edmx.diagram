@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a75fc812260240afb6a8994755e13c8b" Name="Diagram1">
+        <EntityTypeShape EntityType="FBautistaPruebaWeecompanyModel.Entidad" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="FBautistaPruebaWeecompanyModel.EstadoCivil" Width="1.5" PointX="0.75" PointY="6.375" />
+        <EntityTypeShape EntityType="FBautistaPruebaWeecompanyModel.Genero" Width="1.5" PointX="0.75" PointY="3.625" />
+        <EntityTypeShape EntityType="FBautistaPruebaWeecompanyModel.Usuario" Width="1.5" PointX="3" PointY="2.375" />
+        <AssociationConnector Association="FBautistaPruebaWeecompanyModel.Fk_Entidad" />
+        <AssociationConnector Association="FBautistaPruebaWeecompanyModel.Fk_EstadoCivil" />
+        <AssociationConnector Association="FBautistaPruebaWeecompanyModel.Fk_Genero" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,328 @@
+﻿@model ML.Usuario
+@{
+    ViewBag.Title = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-12">
+            <h3>@ViewBag.Titulo</h3>
+            <h5>Ingrese los datos de usuario</h5>
+            <hr />
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="col-md-12">
+        @using (Html.BeginForm("Form", "Usuario", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.Nombre)
+                        @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", @id = "txtNombre", @onkeypress = "return SoloLetras(event, 'lblErrorNombre')", @autocomplete = "off" })
+                        @Html.ValidationMessageFor(model => model.Nombre)
+                        <label id="lblErrorNombre"></label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.ApellidoPaterno)
+                        @Html.TextBoxFor(model => model.ApellidoPaterno, new { @class = "form-control", @id = "txtApellidoPaterno", @onkeypress = "return SoloLetras(event, 'lblErrorApellidoPaterno')", @autocomplete = "off" })
+                        @Html.ValidationMessageFor(model => model.ApellidoPaterno)
+                        <label id="lblErrorApellidoPaterno"></label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.ApellidoMaterno)
+                        @Html.TextBoxFor(model => model.ApellidoMaterno, new { @class = "form-control", @id = "txtApellidoMaterno", @onkeypress = "return SoloLetras(event, 'lblErrorApellidoMaterno')", @autocomplete = "off" })
+                        @Html.ValidationMessageFor(model => model.ApellidoMaterno)
+                        <label id="lblErrorApellidoMaterno"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.Email)
+                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @id = "txtEmail", @onkeypress = "return ValidarEmail(event, 'lblErrorEmail')", @autocomplete = "off" })
+                        @Html.ValidationMessageFor(model => model.Email)
+                        <label id="lblErrorEmail"></label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.FechaNacimiento)
+                        <div class="form-inline">
+                            @Html.TextBoxFor(model => model.FechaNacimiento, "{0:MM/dd/yyy}", new { @class = "form-control", @id = "txtFechaNacimiento", @autocomplete = "off" })
+                            @Html.ValidationMessageFor(model => model.FechaNacimiento)
+                        </div>
+                        <label id=""></label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.Telefono)
+                        @Html.TextBoxFor(model => model.Telefono, new { @class = "form-control", @id = "txtTelefono", @onkeypress = "return SoloNumeros(event, 'lblErrorTelefono')", @autocomplete = "off" })
+                        @Html.ValidationMessageFor(model => model.Telefono)
+                        <label id="lblErrorTelefono"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+
+
+                <div class="form-group">
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.EstadoCivil, new { @class = "control-label col-md-6" })
+                        @Html.DropDownListFor(model => model.EstadoCivil.IdEstadoCivil, new SelectList(Model.EstadoCivil.EstadosCiviles, "IdEstadoCivil", "Nombre"), "Selecciona una opcion", new { @class = "form-control", @id = "ddlEstadoCivil" })
+                        @Html.ValidationMessageFor(model => model.EstadoCivil)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.Curp, new { @class = "control-label col-md-6" })
+                        @Html.TextBoxFor(model => model.Curp, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Curp)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.RFC, new { @class = "control-label col-md-6" })
+                        @Html.TextBoxFor(model => model.RFC, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.RFC)
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+
+
+                <div class="form-group">
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.Genero, new { @class = "control-label col-md-4" })
+                        @Html.DropDownListFor(model => model.Genero.IdGenero, new SelectList(Model.Genero.Generos, "IdGenero", "Nombre"), "Selecciona una opcion", new { @class = "form-control", @id = "ddlgenero" })
+                        @Html.ValidationMessageFor(model => model.Genero)
+                    </div>
+                </div>
+
+
+                <div class="form-group ">
+                    <div class="col-md-4  center-block">
+                        @Html.LabelFor(model => model.Imagen)
+                        <input type="file" name="ImagenData" onchange="readURL(this);">
+                        @if (Model.Imagen != null)
+                        {
+                            <img id="ImagenPreview" src="data:image/jpeg;base64,@Convert.ToBase64String(Model.Imagen)" width="100" height="100" />
+                        }
+                        else
+                        {
+                            <img id="ImagenPreview" src="~/Content/SIN-IMAGEN.png" style=" height:150px; width:150px;" />
+                        }
+
+                        @Html.ValidationMessageFor(model => model.Imagen)
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.Entidad, new { @class = "control-label col-md-4" })
+                        @Html.DropDownListFor(model => model.Entidad.IdEntidad, new SelectList(Model.Entidad.Entidades, "IdEntidad", "Nombre"), "Selecciona una opcion", new { @class = "form-control", @id = "ddlEntidad" })
+                        @Html.ValidationMessageFor(model => model.Entidad)
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="form-group">
+                    <div class="col-md-4">
+                        <input type="submit" value="Guardar" class="btn btn-success" />
+                    </div>
+                </div>
+
+            </div>
+
+
+
+
+        }
+
+    </div>
+
+</div>
+
+<br />
+<br />
+<br />
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <table class="table table-bordered table-responsive">
+                        <thead class="thead-dark">
+                            <tr>
+
+                                <td class="hidden">IdUsuario</td>
+                                <td>Nombre</td>
+                                <td>Estado Civil</td>
+                                <td>Genero</td>
+                                <td>Fecha de Nacimiento</td>
+                                <td>Entidad</td>
+                                <td>Correo</td>
+                                <td>Telefono</td>
+                                <td>RFC</td>
+                                <td>Curp</td>
+                                <td>Imagen</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (ML.Usuario usuario in Model.Usuarios)
+                            {
+                            <tr>
+                                <td class="hidden">@usuario.IdUsuario</td>
+                                <td>@usuario.Nombre @usuario.ApellidoPaterno @usuario.ApellidoMaterno</td>
+
+                                <td>@usuario.EstadoCivil.Nombre</td>
+                                <td>@usuario.Genero.Nombre</td>
+
+                                <td>@usuario.FechaNacimiento</td>
+                                <td>@usuario.Entidad.Nombre</td>
+
+
+
+                                <td>@usuario.Email</td>
+
+
+
+                                <td>@usuario.Telefono</td>
+                                <td>@usuario.RFC</td>
+
+
+
+                                <td>@usuario.Curp</td>
+                                @if (usuario.Imagen != null)
+                                {
+                                    <td><img src="data:image/jpeg;base64,@Convert.ToBase64String(usuario.Imagen)" style=" height:150px; width: 150px;" /></td>
+                                }
+                                else
+                                {
+                                    <td><img src="~/Content/SIN-IMAGEN.png" style=" height:150px; width:150px;" /></td>
+                                }
+
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+        @section Scripts
+{
+            <script src="~/lib/jquery/dist/jquery.js"></script>
+            <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+            <link rel="stylesheet" href="/resources/demos/style.css">
+            <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+            <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+            <script>
+                $(function () {
+                    $("#txtFechaNacimiento").datepicker();
+                });
+            </script>
+
+            <script type="text/javascript">
+
+
+
+    function SoloLetras(e, controlId) {
+          var caracter = e.key;
+          if (!/^[a-zA-Z]+$/.test(caracter)) {
+              $(controlId).text("Solo se aceptan letras");
+              $(controlId).css({ "color": "red" });
+              return false;
+          }
+          else {
+              $(controlId).text("");
+              return true;
+          }
+           }
+
+
+          function SoloNumeros(e, controlId) {
+          var caracter = e.key;
+          if (!/^[0-9]/g.test(caracter)) {
+              $(controlId).text("Solo se aceptan numeros");
+              $(controlId).css({ "color": "red" });
+              return false;
+          }
+          else {
+              $(controlId).text("");
+              return true;
+          }
+                }
+
+
+            function ValidaCorreo()
+           {
+               var correo=document.getElementById("txtEmail").value;
+               var lblError=document.getElementById("lblEmail");
+               lblError.innerHTML="";
+               var expr=/([a-zA-Z0-9]+)([_.-{1}])?([a-zA-Z0-9]+)@@([a-zA-Z0-9]+)([.])([a-zA-Z.]+)/g
+               if(!expr.test(correo)){
+                   lblError.innerHTML="El correo es invalido";
+               }
+           }
+
+
+             function validateFile()
+                  {
+                      var allowedExtension = ['jpeg', 'jpg','png'];
+                      var fileExtension = document.getElementById('IFImage').value.split('.').pop().toLowerCase();
+                      var isValidFile = false;
+                          for(var index in allowedExtension) {
+                              if(fileExtension === allowedExtension[index]) {
+                                  isValidFile = true;
+                                  break;
+                              }
+                          }
+                          if(!isValidFile) {
+                              alert('Las extensiones permitidas son : *.' + allowedExtension.join(', *.'));
+                              document.getElementById('IFImage').value = ""
+                          }
+                          return isValidFile;
+                }
+
+                  function readURL(input) {
+                      if (input.files && input.files[0])
+                      {
+                      var reader = new FileReader();
+                      reader.onload = function (e) {
+                          $('#Img')
+                            .attr('src', e.target.result);
+                      };
+                      reader.readAsDataURL(input.files[0]);
+                  }
+              }
+
+            </script>
+
+        }
